@@ -29,10 +29,10 @@
     //  (MISO)     2  D0
 #else
     // uSD-card-reader (via SPI)
-    #define SPISD_CS                    15          // GPIO for chip select (SD)
+    #define SPISD_CS                     5          // GPIO for chip select (SD)
     #ifndef SINGLE_SPI_ENABLE
-        #define SPISD_MOSI              13          // GPIO for master out slave in (SD) => not necessary for single-SPI
-        #define SPISD_MISO              16          // GPIO for master in slave ou (SD) => not necessary for single-SPI
+        #define SPISD_MOSI              15          // GPIO for master out slave in (SD) => not necessary for single-SPI
+        #define SPISD_MISO               2          // GPIO for master in slave ou (SD) => not necessary for single-SPI
         #define SPISD_SCK               14          // GPIO for clock-signal (SD) => not necessary for single-SPI
     #endif
 #endif
@@ -56,7 +56,7 @@
 
 // Rotary encoder
 #ifdef USEROTARY_ENABLE
-    //#define REVERSE_ROTARY                        // To reverse encoder's direction; switching CLK / DT in hardware does the same
+    #define REVERSE_ROTARY                        // To reverse encoder's direction; switching CLK / DT in hardware does the same
     #define ROTARYENCODER_CLK           34          // rotary encoder's CLK
     #define ROTARYENCODER_DT            35          // Info: Lolin D32 / Lolin D32 pro 35 are using 35 for battery-voltage-monitoring!
 #endif
@@ -66,10 +66,10 @@
 //#define GPIO_HP_EN                      113         // To enable amp for headphones (GPIO or port-channel)
 
 // Control-buttons (set to 99 to DISABLE; 0->39 for GPIO; 100->115 for port-expander)
-#define NEXT_BUTTON                      4          // Button 0: GPIO to detect next
-#define PREVIOUS_BUTTON                 36          // Button 1: GPIO to detect previous
-#define PAUSEPLAY_BUTTON                 5          // Button 2: GPIO to detect pause/play
-#define ROTARYENCODER_BUTTON            32          // (set to 99 to disable; 0->39 for GPIO; 100->115 for port-expander)
+#define NEXT_BUTTON                      5          // Button 0: GPIO to detect next
+#define PREVIOUS_BUTTON                 16          // Button 1: GPIO to detect previous
+#define PAUSEPLAY_BUTTON                 4          // Button 2: GPIO to detect pause/play
+#define ROTARYENCODER_BUTTON            33          // (set to 99 to disable; 0->39 for GPIO; 100->115 for port-expander)
 #define BUTTON_4                        99          // Button 4: unnamed optional button
 #define BUTTON_5                        99          // Button 5: unnamed optional button
 
@@ -99,7 +99,7 @@
 #endif
 
 // (optional) Neopixel
-#define LED_PIN                         12          // GPIO for Neopixel-signaling
+#define LED_PIN                         32          // GPIO for Neopixel-signaling
 
 // (optinal) Headphone-detection
 #ifdef HEADPHONE_ADJUST_ENABLE
@@ -109,15 +109,15 @@
 
 // (optional) Monitoring of battery-voltage via ADC
 #ifdef MEASURE_BATTERY_VOLTAGE
-    #define VOLTAGE_READ_PIN            33          // GPIO used to monitor battery-voltage. Change to 35 if you're using Lolin D32 or Lolin D32 pro as it's hard-wired there!
+    #define VOLTAGE_READ_PIN            39          // GPIO used to monitor battery-voltage. Change to 35 if you're using Lolin D32 or Lolin D32 pro as it's hard-wired there!
     constexpr float referenceVoltage = 3.35;                  // Voltage between 3.3V and GND-pin at the develboard in battery-mode (disconnect USB!)
     constexpr float offsetVoltage = 0.1;                      // If voltage measured by ESP isn't 100% accurate, you can add an correction-value here
 #endif
 
 // (optional) For measuring battery-voltage a voltage-divider is necessary. Their values need to be configured here.
 #ifdef MEASURE_BATTERY_VOLTAGE
-    constexpr uint16_t rdiv1 = 129;                              // Rdiv1 of voltage-divider (kOhms) (measure exact value with multimeter!)
-    constexpr uint16_t rdiv2 = 129;                              // Rdiv2 of voltage-divider (kOhms) (measure exact value with multimeter!) => used to measure voltage via ADC!
+    constexpr uint16_t rdiv1 = 99;                              // Rdiv1 of voltage-divider (kOhms) (measure exact value with multimeter!)
+    constexpr uint16_t rdiv2 = 99;                              // Rdiv2 of voltage-divider (kOhms) (measure exact value with multimeter!) => used to measure voltage via ADC!
 #endif
 
 // (optional) hallsensor. Make sure the GPIO defined doesn't overlap with existing configuration. Please note: only user-support is provided for this feature.
