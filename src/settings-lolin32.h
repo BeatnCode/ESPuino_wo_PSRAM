@@ -29,7 +29,7 @@
     //  (MISO)     2  D0
 #else
     // uSD-card-reader (via SPI)
-    #define SPISD_CS                     5          // GPIO for chip select (SD)
+    #define SPISD_CS                    22          // GPIO for chip select (SD)
     #ifndef SINGLE_SPI_ENABLE
         #define SPISD_MOSI              15          // GPIO for master out slave in (SD) => not necessary for single-SPI
         #define SPISD_MISO               2          // GPIO for master in slave ou (SD) => not necessary for single-SPI
@@ -51,8 +51,8 @@
 #endif
 // I2S (DAC)
 #define I2S_DOUT                        25          // Digital out (I2S)
-#define I2S_BCLK                        27          // BCLK (I2S)
-#define I2S_LRC                         26          // LRC (I2S)
+#define I2S_BCLK                        26          // BCLK (I2S)
+#define I2S_LRC                         27          // LRC (I2S)
 
 // Rotary encoder
 #ifdef USEROTARY_ENABLE
@@ -95,7 +95,7 @@
 // (optional) Power-control
 #define POWER                           17          // GPIO used to drive transistor-circuit, that switches off peripheral devices while ESP32-deepsleep
 #ifdef POWER
-    //#define INVERT_POWER                          // If enabled, use inverted logic for POWER circuit, that means peripherals are turned off by writing HIGH
+    #define INVERT_POWER                          // If enabled, use inverted logic for POWER circuit, that means peripherals are turned off by writing HIGH
 #endif
 
 // (optional) Neopixel
@@ -110,15 +110,18 @@
 // (optional) Monitoring of battery-voltage via ADC
 #ifdef MEASURE_BATTERY_VOLTAGE
     #define VOLTAGE_READ_PIN            39          // GPIO used to monitor battery-voltage. Change to 35 if you're using Lolin D32 or Lolin D32 pro as it's hard-wired there!
-    constexpr float referenceVoltage = 3.35;                  // Voltage between 3.3V and GND-pin at the develboard in battery-mode (disconnect USB!)
-    constexpr float offsetVoltage = 0.1;                      // If voltage measured by ESP isn't 100% accurate, you can add an correction-value here
+    constexpr float offsetVoltage = 0.00;		// If voltage measured by ESP isn't 100% accurate, you can add a correction-value here
+    #ifdef P_BOX
+        constexpr uint16_t rdiv1 = 298;				// Rdiv1 of voltage-divider (kOhms)
+        constexpr uint16_t rdiv2 = 100;				// Rdiv2 of voltage-divider (kOhms) => used to measure voltage via ADC!
+    #endif
+    #ifdef M_BOX
+        constexpr uint16_t rdiv1 = 99;                              // Rdiv1 of voltage-divider (kOhms) (measure exact value with multimeter!)
+        constexpr uint16_t rdiv2 = 99;                              // Rdiv2 of voltage-divider (kOhms) (measure exact value with multimeter!) => used to measure voltage via ADC!
+    #endif
+    constexpr adc_attenuation_t inputAttenuation = ADC_0db;		// ADC_0db (0.1->0.95V) // ADC_2_5db (0.1->1.25V) // ADC_6db (0.15->1.75V) // ADC_11db (0.14->2.45V)
 #endif
 
-// (optional) For measuring battery-voltage a voltage-divider is necessary. Their values need to be configured here.
-#ifdef MEASURE_BATTERY_VOLTAGE
-    constexpr uint16_t rdiv1 = 99;                              // Rdiv1 of voltage-divider (kOhms) (measure exact value with multimeter!)
-    constexpr uint16_t rdiv2 = 99;                              // Rdiv2 of voltage-divider (kOhms) (measure exact value with multimeter!) => used to measure voltage via ADC!
-#endif
 
 // (optional) hallsensor. Make sure the GPIO defined doesn't overlap with existing configuration. Please note: only user-support is provided for this feature.
 #ifdef HALLEFFECT_SENSOR_ENABLE
