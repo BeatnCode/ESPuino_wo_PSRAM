@@ -177,9 +177,7 @@ void setup() {
 #endif
 
 	// Needs power first
-	Log_Printf(LOGLEVEL_NOTICE, "SD-Init1");
 	SdCard_Init();
-	Log_Printf(LOGLEVEL_NOTICE, "SD-Init2");
 
 	// welcome message
 	Serial.print(logo);
