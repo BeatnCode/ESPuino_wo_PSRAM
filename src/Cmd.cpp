@@ -327,7 +327,7 @@ void Cmd_Action(const uint16_t mod) {
 
 		case CMD_VOLUMEDOWN: {
 			if ((OPMODE_NORMAL == System_GetOperationMode()) || (OPMODE_BLUETOOTH_SOURCE == System_GetOperationMode())) {
-				if (AudioPlayer_GetCurrentVolume() > 2) { // prevent volume to be set to 0 (mute)
+				if (AudioPlayer_GetCurrentVolume() > 1) { // prevent volume to be set to 0 (mute)
 					AudioPlayer_VolumeToQueueSender(AudioPlayer_GetCurrentVolume() - 1, true);
 				} 
 			} else {
