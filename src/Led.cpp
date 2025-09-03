@@ -890,7 +890,10 @@ AnimationReturnType Animation_Progress(const bool startNewAnimation, CRGBSet &le
 		if constexpr (NUM_INDICATOR_LEDS == 1) {
 			leds[0].setHue((uint8_t) (85 - ((double) 90 / 100) * gPlayProperties.currentRelPos));
 		} else {
-			const uint32_t ledValue = std::clamp<uint32_t>(map(gPlayProperties.currentRelPos, 0, 98, 0, leds.size() * DIMMABLE_STATES), 0, leds.size() * DIMMABLE_STATES);
+			float ratio = (gPlayProperties.currentRelPos - 0) / (98 - 0);
+			uint32_t mappedValue = ratio * (leds.size() * DIMMABLE_STATES - 0) + 0;
+			const uint32_t ledValue = std::clamp<uint32_t>(mappedValue, 0, leds.size() * DIMMABLE_STATES);
+			// const uint32_t ledValue = std::clamp<uint32_t>(map(gPlayProperties.currentRelPos, 0, 98, 0, leds.size() * DIMMABLE_STATES), 0, leds.size() * DIMMABLE_STATES);
 			const uint8_t fullLeds = ledValue / DIMMABLE_STATES;
 			const uint8_t lastLed = ledValue % DIMMABLE_STATES;
 			for (uint8_t led = 0; led < fullLeds; led++) {
