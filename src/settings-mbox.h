@@ -50,10 +50,17 @@
     #define RFID_IRQ                    39          // PN5180 IRQ PIN (only needed for low power card detection)
 #endif
 // I2S (DAC)
-#define I2S_DOUT                        25          // Digital out (I2S)
-#define I2S_BCLK                        26          // BCLK (I2S)
-#define I2S_LRC                         27          // LRC (I2S)
+#ifdef M_BOX
+    #define I2S_DOUT                    25          // Digital out (I2S)
+    #define I2S_BCLK                    27          // BCLK (I2S)
+    #define I2S_LRC                     26          // LRC (I2S)
+#endif
 
+#ifdef P_BOX
+    #define I2S_DOUT                    25          // Digital out (I2S)
+    #define I2S_BCLK                    26          // BCLK (I2S)
+    #define I2S_LRC                     27          // LRC (I2S)
+#endif
 // Rotary encoder
 #ifdef USEROTARY_ENABLE
     #define REVERSE_ROTARY                        // To reverse encoder's direction; switching CLK / DT in hardware does the same
@@ -66,13 +73,22 @@
 //#define GPIO_HP_EN                      113         // To enable amp for headphones (GPIO or port-channel)
 
 #ifdef M_BOX
-    // Control-buttons (set to 99 to DISABLE; 0->39 for GPIO; 100->115 for port-expander)
-    #define NEXT_BUTTON                      5          // Button 0: GPIO to detect next
-    #define PREVIOUS_BUTTON                 16          // Button 1: GPIO to detect previous
-    #define PAUSEPLAY_BUTTON                 4          // Button 2: GPIO to detect pause/play
-    #define ROTARYENCODER_BUTTON            33          // (set to 99 to disable; 0->39 for GPIO; 100->115 for port-expander)
-    #define BUTTON_4                        99          // Button 4: vol +
-    #define BUTTON_5                        99          // Button 5: vol -
+#define GPIO_PA_EN                          22         // To enable amp for loudspeaker (GPIO or port-channel)
+
+// Control-buttons (set to 99 to DISABLE; 0->39 for GPIO; 100->115 for port-expander)
+// #define NEXT_BUTTON                      5          // Button 0: GPIO to detect next
+// #define PREVIOUS_BUTTON                 16          // Button 1: GPIO to detect previous
+// #define PAUSEPLAY_BUTTON                 4          // Button 2: GPIO to detect pause/play
+// #define ROTARYENCODER_BUTTON            33          // (set to 99 to disable; 0->39 for GPIO; 100->115 for port-expander)
+// #define BUTTON_4                        99          // Button 4: vol +
+// #define BUTTON_5                        99          // Button 5: vol -
+
+    #define NEXT_BUTTON                      4          // Button 0: vol -
+    #define PREVIOUS_BUTTON                 16          // Button 1: previous
+    #define PAUSEPLAY_BUTTON                 5          // Button 2: pause/play
+    #define ROTARYENCODER_BUTTON            34          // Button 3: next
+    #define BUTTON_4                        35          // Button 4: vol +
+    #define BUTTON_5                        33          // Button 5: specail function
 #endif
 
 #ifdef P_BOX
