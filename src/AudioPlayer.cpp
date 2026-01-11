@@ -392,7 +392,16 @@ void AudioPlayer_Task(void *parameter) {
 	audio->setPinout(I2S_BCLK, I2S_LRC, I2S_DOUT);
 	audio->setVolumeSteps(AUDIOPLAYER_VOLUME_MAX);
 	audio->setVolume(AudioPlayer_CurrentVolume, VOLUMECURVE);
+	#ifdef PLAY_MONO_SPEAKER
+	gPlayProperties.currentPlayMono = true;
+	gPlayProperties.newPlayMono = true;
+	#endif
 	audio->forceMono(gPlayProperties.currentPlayMono);
+	if (gPlayProperties.currentPlayMono) {
+		log_e("AudioPlayer_Task: starting in MONO mode");
+	} else {
+		log_e("AudioPlayer_Task: starting in STEREO mode");
+	}
 	int8_t currentEqualizer[3] = {gPrefsSettings.getChar("gainLowPass", 0), gPrefsSettings.getChar("gainBandPass", 0), gPrefsSettings.getChar("gainHighPass", 0)};
 	audio->setTone(currentEqualizer[0], currentEqualizer[1], currentEqualizer[2]);
 
