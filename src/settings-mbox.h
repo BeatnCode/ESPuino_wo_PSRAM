@@ -70,22 +70,12 @@
 
 // Amp enable (optional)
 //#define GPIO_PA_EN                      112         // To enable amp for loudspeaker (GPIO or port-channel)
-//#define GPIO_HP_EN                      113         // To enable amp for headphones (GPIO or port-channel)
+//#define GPIO_HP_EN                      113         // To enable amp for headphones (GPIO or port-channel) --> nicht mehr vorhanden auf Kopfhörerplatine (amp immer an)
 
 #ifdef M_BOX
-#define GPIO_PA_EN                          22         // To enable amp for loudspeaker (GPIO or port-channel)
-
-// Control-buttons (set to 99 to DISABLE; 0->39 for GPIO; 100->115 for port-expander)
-// #define NEXT_BUTTON                      5          // Button 0: GPIO to detect next
-// #define PREVIOUS_BUTTON                 16          // Button 1: GPIO to detect previous
-// #define PAUSEPLAY_BUTTON                 4          // Button 2: GPIO to detect pause/play
-// #define ROTARYENCODER_BUTTON            33          // (set to 99 to disable; 0->39 for GPIO; 100->115 for port-expander)
-// #define BUTTON_4                        99          // Button 4: vol +
-// #define BUTTON_5                        99          // Button 5: vol -
-
-    #define NEXT_BUTTON                      4          // Button 0: vol -
+    #define NEXT_BUTTON                      5          // Button 0: vol -
     #define PREVIOUS_BUTTON                 16          // Button 1: previous
-    #define PAUSEPLAY_BUTTON                 5          // Button 2: pause/play
+    #define PAUSEPLAY_BUTTON                 4          // Button 2: pause/play
     #define ROTARYENCODER_BUTTON            34          // Button 3: next
     #define BUTTON_4                        35          // Button 4: vol +
     #define BUTTON_5                        33          // Button 5: specail function
@@ -119,7 +109,7 @@
 // Please note: only RTC-GPIOs (0, 4, 12, 13, 14, 15, 25, 26, 27, 32, 33, 34, 35, 36, 39, 99) can be used! Set to 99 to DISABLE.
 // Please note #2: this button can be used as interrupt-pin for port-expander. If so, all pins connected to port-expander can wake up ESPuino.
 #ifdef M_BOX
-    #define WAKEUP_BUTTON                   ROTARYENCODER_BUTTON // Defines the button that is used to wake up ESPuino from deepsleep.
+    #define WAKEUP_BUTTON                   PAUSEPLAY_BUTTON // Defines the button that is used to wake up ESPuino from deepsleep.
 #endif
 #ifdef P_BOX
     #define WAKEUP_BUTTON                   PAUSEPLAY_BUTTON // Defines the button that is used to wake up ESPuino from deepsleep.
@@ -149,8 +139,8 @@
         constexpr uint16_t rdiv2 = 100;				// Rdiv2 of voltage-divider (kOhms) => used to measure voltage via ADC!
     #endif
     #ifdef M_BOX
-        constexpr uint16_t rdiv1 = 99;                              // Rdiv1 of voltage-divider (kOhms) (measure exact value with multimeter!)
-        constexpr uint16_t rdiv2 = 99;                              // Rdiv2 of voltage-divider (kOhms) (measure exact value with multimeter!) => used to measure voltage via ADC!
+        constexpr uint16_t rdiv1 = 297;                              // Rdiv1 of voltage-divider (kOhms) (measure exact value with multimeter!)
+        constexpr uint16_t rdiv2 = 101;                              // Rdiv2 of voltage-divider (kOhms) (measure exact value with multimeter!) => used to measure voltage via ADC!
     #endif
     constexpr adc_attenuation_t inputAttenuation = ADC_0db;		// ADC_0db (0.1->0.95V) // ADC_2_5db (0.1->1.25V) // ADC_6db (0.15->1.75V) // ADC_11db (0.14->2.45V)
 #endif
