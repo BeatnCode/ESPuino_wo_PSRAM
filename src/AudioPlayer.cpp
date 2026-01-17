@@ -974,6 +974,7 @@ void AudioPlayer_VolumeToQueueSender(const int32_t _newVolume, bool reAdjustRota
 		return;
 	} else if (_newVolume > AudioPlayer_GetMaxVolume()) {
 		Log_Println(maxLoudnessReached, LOGLEVEL_INFO);
+		AudioPlayer_SetCurrentVolume(AudioPlayer_GetMaxVolume()); // Set to max volume even if requested volume was higher
 		return;
 	} else {
 		_volume = _newVolume;
