@@ -144,15 +144,27 @@ void AudioPlayer_Init(void) {
 
 	// Don't start audio-task in BT-speaker mode!
 	if ((System_GetOperationMode() == OPMODE_NORMAL) || (System_GetOperationMode() == OPMODE_BLUETOOTH_SOURCE)) {
-		xTaskCreatePinnedToCore(
-			AudioPlayer_Task, /* Function to implement the task */
-			"mp3play", /* Name of the task */
-			6000, /* Stack size in words */
-			NULL, /* Task input parameter */
-			2 | portPRIVILEGE_BIT, /* Priority of the task */
-			&AudioTaskHandle, /* Task handle. */
-			1 /* Core where the task should run */
-		);
+		if (Wlan_IsConnected) {
+			xTaskCreatePinnedToCore(
+				AudioPlayer_Task, /* Function to implement the task */
+				"mp3play", /* Name of the task */
+				6000, /* Stack size in words */
+				NULL, /* Task input parameter */
+				2 | portPRIVILEGE_BIT, /* Priority of the task */
+				&AudioTaskHandle, /* Task handle. */
+				1 /* Core where the task should run */
+			);
+		} else { // WiFi not connected, start task with larger stack
+			xTaskCreatePinnedToCore(
+				AudioPlayer_Task, /* Function to implement the task */
+				"mp3play", /* Name of the task */
+				8192, /* Stack size in words */
+				NULL, /* Task input parameter */
+				2 | portPRIVILEGE_BIT, /* Priority of the task */
+				&AudioTaskHandle, /* Task handle. */
+				1 /* Core where the task should run */
+			);
+		}
 	}
 }
 
